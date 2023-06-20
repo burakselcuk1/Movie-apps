@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.movieapplication.R
 import com.example.movieapplication.model.Movie
 
-class MovieAdapter(private val movies: List<Movie>, private val onMovieClick: (Movie) -> Unit) :
+class MovieAdapter(private val movies: MutableList<Movie>, private val onMovieClick: (Movie) -> Unit) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     inner class MovieViewHolder(view: View, val movieName: TextView, val movieImage: ImageView) : RecyclerView.ViewHolder(view)
@@ -45,5 +45,12 @@ class MovieAdapter(private val movies: List<Movie>, private val onMovieClick: (M
             }
         }
     }
+
+    fun addMovies(newMovies: List<Movie>) {
+        val oldCount = movies.size
+        movies.addAll(newMovies)
+        notifyItemRangeInserted(oldCount, newMovies.size)
+    }
 }
+
 
