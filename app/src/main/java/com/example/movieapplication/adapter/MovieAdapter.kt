@@ -1,5 +1,6 @@
 package com.example.movieapplication.adapter
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +35,14 @@ class MovieAdapter(private val movies: List<Movie>, private val onMovieClick: (M
                 .load("https://image.tmdb.org/t/p/w500${movie.posterPath}")
                 .into(movieImage)
 
-            itemView.setOnClickListener { onMovieClick(movie) }
+            itemView.setOnClickListener {
+                val bundle = Bundle().apply {
+                    putString("movie_title", movie.title)
+                    putString("movie_overview", movie.overview)
+                    putString("movie_poster_path", movie.posterPath)
+                }
+                onMovieClick(movie)
+            }
         }
     }
 }

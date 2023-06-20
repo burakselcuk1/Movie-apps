@@ -1,11 +1,8 @@
 package com.example.movieapplication.ui.mainFragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapplication.R
 import com.example.movieapplication.adapter.MovieAdapter
@@ -32,14 +29,16 @@ class MainFragment : BaseFragment<FragmentMainBinding, MainFragmentViewModel>(
             movieResponse?.let {
                 binding.recyclerView.adapter = MovieAdapter(it.movies) { movie ->
                     // handle movie click event
+                    val bundle = Bundle().apply {
+                        putString("movie_title", movie.title)
+                        putString("movie_overview", movie.overview)
+                        putString("movie_poster_path", movie.posterPath)
+                    }
+                    findNavController().navigate(R.id.action_mainFragment_to_detailFragment, bundle)
                 }
             } ?: run {
                 // handle error
             }
         }
     }
-
-
-
-
 }
